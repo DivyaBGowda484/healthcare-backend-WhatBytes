@@ -67,7 +67,6 @@ python manage.py runserver
 - **API routes**: `/api/patients/`, `/api/doctors/`, `/api/mappings/`  
 
 ## Testing
-
 Run the automated tests:
 ```bash
 python manage.py test
