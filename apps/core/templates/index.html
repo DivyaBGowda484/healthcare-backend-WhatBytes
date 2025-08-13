@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Healthcare API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        h2 {
+            color: #333;
+            margin-top: 40px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px 20px;
+            margin: 10px auto;
+            max-width: 400px;
+            border-radius: 8px;
+            transition: 0.2s all;
+        }
+        li:hover {
+            background-color: #e8f5e9;
+            transform: translateY(-2px);
+        }
+        a {
+            color: #1E90FF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            margin-top: 60px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Healthcare API</h1>
+    <p>Use these endpoints to interact with the system:</p>
+
+    <h2>Patients</h2>
+    <ul>
+        <li><a href="/api/patients/">List / Create Patients</a></li>
+        <li><a href="/api/patients/bulk-create/">Bulk Create Patients</a></li>
+        <li><a href="/api/patients/bulk-update/">Bulk Update Patients</a></li>
+    </ul>
+
+    <h2>Doctors</h2>
+    <ul>
+        <li><a href="/api/doctors/">List / Create Doctors</a></li>
+    </ul>
+
+    <h2>Mappings</h2>
+    <ul>
+        <li><a href="/api/mappings/">Patient-Doctor Assignments</a></li>
+        <li><a href="/api/mappings/<patient_id>/">Doctors for a Patient</a></li>
+    </ul>
+
+    <h2>Authentication</h2>
+    <ul>
+        <li><a href="/api/auth/login/">Login</a></li>
+        <li><a href="/api/auth/register/">Register</a></li>
+    </ul>
+
+    <div class="footer">
+        GitHub: <a href="https://github.com/YourUsername" target="_blank">Click Here</a>
+    </div>
+</body>
+</html>
