@@ -12,7 +12,7 @@ class TimeStampedModel(models.Model):
         settings.AUTH_USER_MODEL, null=True, blank=True,
         related_name="%(class)s_updated", on_delete=models.SET_NULL
     )
-    is_active = models.BooleanField(default=True)  # Soft delete flag
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         abstract = True

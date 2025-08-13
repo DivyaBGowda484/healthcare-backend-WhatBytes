@@ -25,7 +25,6 @@ class LoginView(APIView):
         if not email or not password:
             return Response({"detail": "Email and password are required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # We used email as username at registration time
         user = authenticate(username=email, password=password)
         if not user:
             return Response({"detail": "Invalid credentials."}, status=status.HTTP_401_UNAUTHORIZED)

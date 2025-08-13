@@ -14,9 +14,6 @@ class IsReceptionist(permissions.BasePermission):
         return request.user and request.user.groups.filter(name="Receptionist").exists()
 
 class IsOwnerOrAdmin(permissions.BasePermission):
-    """
-    For resources created_by — allow the creator or admins to modify, others read-only.
-    """
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True

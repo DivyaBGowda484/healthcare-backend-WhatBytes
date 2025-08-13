@@ -19,7 +19,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         name = validated_data.pop("name")
         email = validated_data.pop("email")
         password = validated_data.pop("password")
-        # Use email as username for convenience
         user = User(username=email, email=email, first_name=name)
         user.set_password(password)
         user.save()

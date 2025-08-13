@@ -9,7 +9,6 @@ class PatientViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        # Only return patients created by the authenticated user
         return Patient.objects.filter(created_by=self.request.user).order_by("-created_at")
 
     def perform_create(self, serializer):

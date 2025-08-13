@@ -1,4 +1,3 @@
-# core/serializers.py
 from rest_framework import serializers
 from apps.patients.models import Patient
 from apps.doctors.models import Doctor
@@ -24,7 +23,6 @@ class PatientSerializer(serializers.ModelSerializer):
         return value
 
     def validate_email(self, value):
-        # DRF EmailField already validates syntax; could add domain checks here
         return value
 
 class MappingSerializer(serializers.ModelSerializer):

@@ -17,7 +17,7 @@ class PatientViewSet(viewsets.ModelViewSet):
     queryset = Patient.objects.filter(is_active=True)
     serializer_class = PatientSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['age','created_at']  # add fields you want filterable
+    filterset_fields = ['age','created_at']
     search_fields = ['name','email','phone','address']
     ordering_fields = ['name','created_at','age']
     permission_classes = [IsOwnerOrAdmin]
@@ -34,7 +34,6 @@ class PatientViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'], url_path='bulk-update')
     def bulk_update(self, request):
-        # Accept list of {id, fields...}
         payload = request.data
         updated = []
         for item in payload:
@@ -75,9 +74,6 @@ class MappingViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'])
     def bulk_assign(self, request):
-        """
-        Expect payload: { "patient_ids": [1,2], "doctor_id": 5 }
-        """
         patient_ids = request.data.get("patient_ids", [])
         doctor_id = request.data.get("doctor_id")
         doctor = None

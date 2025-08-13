@@ -10,7 +10,7 @@ env = environ.Env(
     SECRET_KEY=(str, "dev-secret-change-me"),
     ALLOWED_HOSTS=(list, ["*"]),
 )
-# Read .env if present
+
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 DEBUG = env("DEBUG")
@@ -49,7 +49,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "apps/core/templates"],  # add this
+        "DIRS": [BASE_DIR / "apps/core/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -68,7 +68,7 @@ ASGI_APPLICATION = "config.asgi.application"
 
 DATABASES = {
     "default": env.db(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"  # fallback for quick start
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
     )
 }
 
