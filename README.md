@@ -1,94 +1,86 @@
-# Healthcare Backend (Django + DRF + JWT + PostgreSQL)
+# Healthcare Backend
 
-A reference implementation for the assignment: user registration/login with JWT, and CRUD APIs for Patients, Doctors, and Patient–Doctor mappings.
+A **Django + DRF** backend for managing patients, doctors, and patient-doctor assignments with authentication, filtering, search, and bulk operations. This project is designed to serve as a robust backend for healthcare management systems.
 
-## Quickstart (Local, macOS/Linux)
+## Features
+
+- User authentication using **JWT** (`djangorestframework-simplejwt`)
+- CRUD operations for **Patients**, **Doctors**, and **Patient-Doctor mappings**
+- Bulk operations for creating/updating patients and assigning doctors
+- Filtering, searching, and ordering on key fields
+- Validation to prevent duplicate doctor-patient assignments
+- API landing page and documentation links
+
+## Tech Stack
+
+- **Backend**: Python 3.13, Django 5, Django REST Framework, django-filter  
+- **Database**: PostgreSQL 
+- **Auth**: JWT authentication (access + refresh tokens)  
+- **Dev Tools**: Docker & docker-compose for containerized setup  
+
+## Requirements
+
+- Python 3.13+  
+- pip packages (install via `requirements.txt`)
 
 ```bash
-# 1) Create and activate a virtualenv
-python3 -m venv .venv
-source .venv/bin/activate
-
-# 2) Install dependencies
 pip install -r requirements.txt
+```
 
-# 3) Copy env template and fill values
-cp .env.example .env
-# For local Postgres, set DATABASE_URL like:
-# DATABASE_URL=postgres://postgres:postgres@localhost:5432/healthcare_db
+## Setup Instructions
 
-# 4) Run migrations & create a superuser (optional)
+### Clone the repository
+```bash
+git clone https://github.com/DivyaBGowda484/healthcare-backend-WhatBytes.git
+cd healthcare-backend-WhatBytes
+```
+
+### Create virtual environment and activate
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### Install backend dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### Run migrations
+```bash
 python manage.py migrate
+```
+
+### Create a superuser (for admin access)
+```bash
 python manage.py createsuperuser
-
-# 5) Start dev server
-python manage.py runserver 0.0.0.0:8000
 ```
 
-## Quickstart (Docker)
-
+### Start the development server
 ```bash
-cp .env.docker.example .env   # uses service host "db"
-docker compose up --build
-# App: http://localhost:8000/
+python manage.py runserver
 ```
 
-## API Base URL
+## Access Endpoints
 
-`/api/`
+- **Landing page**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)  
+- **API routes**: `/api/patients/`, `/api/doctors/`, `/api/mappings/`  
 
-### Auth
-- `POST /api/auth/register/` — body: `{ "name": "...", "email": "...", "password": "..." }`
-- `POST /api/auth/login/` — body: `{ "email": "...", "password": "..." }` → `{ "access": "...", "refresh": "..." }`
-- `POST /api/auth/token/refresh/` — body: `{ "refresh": "..." }`
+## Testing
 
-### Patients (auth required)
-- `POST /api/patients/`
-- `GET /api/patients/` — **only patients created by the authenticated user**
-- `GET /api/patients/<id>/`
-- `PUT /api/patients/<id>/`
-- `DELETE /api/patients/<id>/`
-
-### Doctors (auth required)
-- `POST /api/doctors/`
-- `GET /api/doctors/`
-- `GET /api/doctors/<id>/`
-- `PUT /api/doctors/<id>/`
-- `DELETE /api/doctors/<id>/`
-
-### Mappings (auth required)
-- `POST /api/mappings/` — assign a doctor to a patient
-- `GET /api/mappings/` — list all mappings
-- `GET /api/mappings/<patient_id>/` — list doctors assigned to the given patient
-- `DELETE /api/mappings/<id>/` — remove a specific mapping
-
-## Example cURL
-
+Run the automated tests:
 ```bash
-# Register
-curl -X POST http://localhost:8000/api/auth/register/   -H "Content-Type: application/json"   -d '{"name":"Divya","email":"divya@example.com","password":"P@ssw0rd123"}'
-
-# Login
-curl -X POST http://localhost:8000/api/auth/login/   -H "Content-Type: application/json"   -d '{"email":"divya@example.com","password":"P@ssw0rd123"}'
-
-# Use the access token from login below
-ACCESS=REPLACE_WITH_ACCESS_TOKEN
-
-# Create patient
-curl -X POST http://localhost:8000/api/patients/   -H "Authorization: Bearer $ACCESS" -H "Content-Type: application/json"   -d '{"name":"John Doe","age":35,"gender":"M","address":"221B Baker Street"}'
-
-# List my patients
-curl -X GET http://localhost:8000/api/patients/   -H "Authorization: Bearer $ACCESS"
-
-# Create doctor
-curl -X POST http://localhost:8000/api/doctors/   -H "Authorization: Bearer $ACCESS" -H "Content-Type: application/json"   -d '{"name":"Dr. House","specialization":"Diagnostics","email":"house@hospital.org","phone":"+1-555-1234"}'
-
-# Map doctor to patient
-curl -X POST http://localhost:8000/api/mappings/   -H "Authorization: Bearer $ACCESS" -H "Content-Type: application/json"   -d '{"patient":1,"doctor":1}'
+python manage.py test
 ```
 
-## Tech
-- Django, Django REST Framework
-- JWT via `djangorestframework-simplejwt`
-- PostgreSQL
-- `django-environ` for `.env` management
+## API Endpoints Overview
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/patients/` | GET, POST, PUT, DELETE | CRUD operations for patients |
+| `/api/doctors/` | GET, POST, PUT, DELETE | CRUD operations for doctors |
+| `/api/mappings/` | GET, POST | Assign patients to doctors |
+| `/api/mappings/<patient_id>/` | GET | List doctors assigned to a specific patient |
+| `/api/patients/bulk-create/` | POST | Bulk create patients |
+| `/api/patients/bulk-update/` | POST | Bulk update patients |
+| `/api/mappings/bulk-assign/` | POST | Bulk assign a doctor to multiple patients |
