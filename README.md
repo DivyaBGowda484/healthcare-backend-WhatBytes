@@ -83,3 +83,79 @@ python manage.py test
 | `/api/patients/bulk-create/` | POST | Bulk create patients |
 | `/api/patients/bulk-update/` | POST | Bulk update patients |
 | `/api/mappings/bulk-assign/` | POST | Bulk assign a doctor to multiple patients |
+
+---
+
+### 1. Register a new user
+
+curl -X POST http://localhost:8000/api/auth/register/ \
+-H "Content-Type: application/json" \
+-d '{"name":"John Smith","email":"john@example.com","password":"SecurePass123"}'
+
+
+### 2. Login to get JWT tokens
+
+curl -X POST http://localhost:8000/api/auth/login/ \
+-H "Content-Type: application/json" \
+-d '{"email":"john@example.com","password":"SecurePass123"}'
+
+### Copy the access token from the login response and set it here:
+ACCESS=REPLACE_WITH_ACCESS_TOKEN
+
+
+### 3. Create a superuser (optional, admin access)
+
+python manage.py createsuperuser
+
+
+### 4. Apply migrations
+
+python manage.py migrate
+
+
+### 5. Start the development server
+
+python manage.py runserver
+
+
+### 6. Create a patient
+
+curl -X POST http://localhost:8000/api/patients/ \
+-H "Authorization: Bearer $ACCESS" \
+-H "Content-Type: application/json" \
+-d '{"name":"Alice Johnson","age":29,"gender":"F","address":"123 Main Street"}'
+
+
+### 7. List patients
+
+curl -X GET http://localhost:8000/api/patients/ \
+-H "Authorization: Bearer $ACCESS"
+
+
+### 8. Create a doctor
+
+curl -X POST http://localhost:8000/api/doctors/ \
+-H "Authorization: Bearer $ACCESS" \
+-H "Content-Type: application/json" \
+-d '{"name":"Dr. Sarah Lee","specialization":"Cardiology","email":"sarah.lee@hospital.org","phone":"+1-555-9876"}'
+
+
+### 9. List doctors
+
+curl -X GET http://localhost:8000/api/doctors/ \
+-H "Authorization: Bearer $ACCESS"
+
+
+### 10. Map a doctor to a patient
+
+curl -X POST http://localhost:8000/api/mappings/ \
+-H "Authorization: Bearer $ACCESS" \
+-H "Content-Type: application/json" \
+-d '{"patient":1,"doctor":1}'
+
+
+### 11. List doctor-patient mappings
+
+curl -X GET http://localhost:8000/api/mappings/ \
+-H "Authorization: Bearer $ACCESS"
+
