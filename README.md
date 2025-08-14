@@ -87,75 +87,76 @@ python manage.py test
 ---
 
 ### 1. Register a new user
-
+```bash
 curl -X POST http://localhost:8000/api/auth/register/ \
 -H "Content-Type: application/json" \
 -d '{"name":"John Smith","email":"john@example.com","password":"SecurePass123"}'
-
+```
 
 ### 2. Login to get JWT tokens
-
+```bash
 curl -X POST http://localhost:8000/api/auth/login/ \
 -H "Content-Type: application/json" \
 -d '{"email":"john@example.com","password":"SecurePass123"}'
+```
 
 ### Copy the access token from the login response and set it here:
 ACCESS=REPLACE_WITH_ACCESS_TOKEN
 
 
 ### 3. Create a superuser (optional, admin access)
-
+```bash
 python manage.py createsuperuser
-
+```
 
 ### 4. Apply migrations
-
+```bash
 python manage.py migrate
-
+```
 
 ### 5. Start the development server
-
+```bash
 python manage.py runserver
-
+```
 
 ### 6. Create a patient
-
+```bash
 curl -X POST http://localhost:8000/api/patients/ \
 -H "Authorization: Bearer $ACCESS" \
 -H "Content-Type: application/json" \
 -d '{"name":"Alice Johnson","age":29,"gender":"F","address":"123 Main Street"}'
-
+```
 
 ### 7. List patients
-
+```bash
 curl -X GET http://localhost:8000/api/patients/ \
 -H "Authorization: Bearer $ACCESS"
-
+```
 
 ### 8. Create a doctor
-
+```bash
 curl -X POST http://localhost:8000/api/doctors/ \
 -H "Authorization: Bearer $ACCESS" \
 -H "Content-Type: application/json" \
 -d '{"name":"Dr. Sarah Lee","specialization":"Cardiology","email":"sarah.lee@hospital.org","phone":"+1-555-9876"}'
-
+```
 
 ### 9. List doctors
-
+```bash
 curl -X GET http://localhost:8000/api/doctors/ \
 -H "Authorization: Bearer $ACCESS"
-
+```
 
 ### 10. Map a doctor to a patient
-
+```bash
 curl -X POST http://localhost:8000/api/mappings/ \
 -H "Authorization: Bearer $ACCESS" \
 -H "Content-Type: application/json" \
 -d '{"patient":1,"doctor":1}'
-
+```
 
 ### 11. List doctor-patient mappings
-
+```bash
 curl -X GET http://localhost:8000/api/mappings/ \
 -H "Authorization: Bearer $ACCESS"
-
+```
